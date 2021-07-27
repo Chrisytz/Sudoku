@@ -76,10 +76,10 @@ def print_initial_grid(boxList, grid, window, font, gridlineColour):
 
 
 # draws numbers to the screen in the solve_grid function to display agorithm in action
-def print_number(boxList, row, col, window, number, font, selectedColour):
+def print_number(boxList, row, col, window, number, font):
     for box in boxList:
         if box.row == row and box.col == col:
-            image = font.render(str(number), True, (0, 0, 0), selectedColour)
+            image = font.render(str(number), True, (0, 0, 0), (255,255,255))
             pygame.draw.rect(window, (255, 255, 255), box.rect)
             window.blit(image, image.get_rect(center=box.rect.center))
 
@@ -212,7 +212,7 @@ def value_safe(arr, row, col, num):
 
 
 # recursive backtraking algorithm to solve sodoku grid
-def solve_grid(arr, boxList, window, font, display, selectedColour):
+def solve_grid(arr, boxList, window, font, display):
     current = [0, 0]
 
     # set current to a 0-value box
@@ -229,12 +229,13 @@ def solve_grid(arr, boxList, window, font, display, selectedColour):
 
             # if display == True draw it in the screen
             if display:
-                print_number(boxList, row, col, window, num, font, selectedColour)
+                print_number(boxList, row, col, window, num, font)
+                draw_grid_lines(window)
                 pygame.display.flip()
                 pygame.time.delay(10)
 
             # recursive part of the function --> if the value is safe continue to the next 0-value
-            if solve_grid(arr, boxList, window, font, display, selectedColour) == True:
+            if solve_grid(arr, boxList, window, font, display) == True:
                 return True
 
             # if value does not work out, set it to back to 0 (empty) and algorithm try new values
@@ -249,7 +250,7 @@ def game(grid, unsolvedGrid, solvedGrid):
     # init
     pygame.init()
     window = pygame.display.set_mode((450, 450))
-    pygame.display.set_caption("Shade of Hue")
+    pygame.display.set_caption("Sudoku")
     done = False
 
     print (pygame.font.get_fonts())
@@ -265,13 +266,12 @@ def game(grid, unsolvedGrid, solvedGrid):
     gridlineColour = (150, 150, 150)
 
     create_grid(boxList, grid)
-    solve_grid(solvedGrid, boxList, window, font, False, selectedColour)
+    solve_grid(solvedGrid, boxList, window, font, False)
 
     print_initial_grid(boxList, grid, window, font, gridlineColour)
     draw_grid_lines(window)
 
     pygame.display.flip()
-    pygame.time.delay(1000)
 
     # loop for the game
     while not done:
@@ -381,8 +381,8 @@ def game(grid, unsolvedGrid, solvedGrid):
 
             # if enter is clicked or user has solved grid, run backtracking algorithm and set solved to true
             if pygame.key.get_pressed()[pygame.K_RETURN] or solvedGrid == grid:
-                print_initial_grid(boxList, grid, window, font, selectedColour)
-                solve_grid(unsolvedGrid, boxList, window, font, True, selectedColour)
+                print_initial_grid(boxList, grid, window, font, gridlineColour)
+                solve_grid(unsolvedGrid, boxList, window, font, True)
                 solved = True
 
         # update display
