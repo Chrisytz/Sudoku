@@ -232,7 +232,7 @@ def solve_grid(arr, boxList, window, font, display):
                 print_number(boxList, row, col, window, num, font)
                 draw_grid_lines(window)
                 pygame.display.flip()
-                pygame.time.delay(10)
+                pygame.time.delay(1)
 
             # recursive part of the function --> if the value is safe continue to the next 0-value
             if solve_grid(arr, boxList, window, font, display) == True:
@@ -379,11 +379,11 @@ def game(grid, unsolvedGrid, solvedGrid):
 
                             box.numEntered = False
 
-            # if enter is clicked or user has solved grid, run backtracking algorithm and set solved to true
-            if pygame.key.get_pressed()[pygame.K_RETURN] or solvedGrid == grid:
-                print_initial_grid(boxList, grid, window, font, gridlineColour)
-                solve_grid(unsolvedGrid, boxList, window, font, True)
-                solved = True
+                # if enter is clicked or user has solved grid, run backtracking algorithm and set solved to true
+                if pygame.key.get_pressed()[pygame.K_RETURN] or solvedGrid == grid:
+                    print_initial_grid(boxList, grid, window, font, gridlineColour)
+                    solve_grid(unsolvedGrid, boxList, window, font, True)
+                    solved = True
 
         # update display
         pygame.display.flip()
@@ -394,16 +394,58 @@ def game(grid, unsolvedGrid, solvedGrid):
 
 # running file
 if __name__ == '__main__':
-    # sodoku grid --> feel free to change this!
-    grid = [[3, 0, 6, 5, 0, 8, 4, 0, 0],
-            [5, 2, 0, 0, 0, 0, 0, 0, 0],
-            [0, 8, 7, 0, 0, 0, 0, 3, 1],
-            [0, 0, 3, 0, 1, 0, 0, 8, 0],
-            [9, 0, 0, 8, 6, 3, 0, 0, 5],
-            [0, 5, 0, 0, 9, 0, 6, 0, 0],
-            [1, 3, 0, 0, 0, 0, 2, 5, 0],
-            [0, 0, 0, 0, 0, 0, 0, 7, 4],
-            [0, 0, 5, 2, 0, 6, 3, 0, 0]]
+
+    # a few grids... I was too lazy to add more oops
+
+    '''
+    # easy grid #
+    grid = [[4, 2, 0, 0, 0, 8, 9, 0, 0],
+            [9, 0, 0, 0, 4, 2, 0, 0, 7],
+            [0, 8, 3, 1, 0, 7, 0, 0, 0],
+            [0, 3, 2, 6, 0, 5, 4, 0, 0],
+            [5, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 6, 0, 2, 1, 0, 5, 0, 8],
+            [0, 7, 1, 0, 0, 6, 0, 4, 0],
+            [2, 5, 6, 4, 0, 0, 8, 0, 1],
+            [3, 4, 0, 8, 5, 0, 0, 0, 6]]
+    '''
+
+    # medium grid #
+    grid = [[0, 7, 0, 1, 0, 0, 0, 0, 0],
+            [0, 8, 0, 0, 5, 7, 4, 0, 6],
+            [2, 0, 0, 4, 0, 3, 0, 7, 0],
+            [0, 0, 0, 6, 0, 1, 0, 4, 9],
+            [3, 6, 0, 9, 4, 0, 0, 0, 0],
+            [0, 4, 0, 0, 0, 0, 6, 2, 0],
+            [7, 0, 8, 0, 0, 0, 0, 0, 2],
+            [0, 0, 0, 0, 0, 0, 0, 0, 7],
+            [0, 0, 0, 7, 2, 8, 9, 3, 4]]
+
+    '''
+    # hard grid #
+    grid = [[9, 2, 0, 0, 0, 0, 3, 0, 0],
+            [0, 5, 0, 0, 4, 0, 0, 2, 0],
+            [0, 0, 0, 0, 0, 6, 0, 0, 0],
+            [0, 0, 0, 4, 0, 0, 0, 1, 0],
+            [3, 0, 0, 0, 0, 5, 6, 8, 0],
+            [0, 0, 0, 0, 8, 3, 0, 0, 4],
+            [6, 8, 0, 1, 3, 0, 0, 0, 0],
+            [0, 0, 4, 0, 0, 0, 1, 0, 0],
+            [0, 1, 9, 0, 0, 0, 5, 0, 0]]
+    '''
+
+    '''
+    # expert grid #
+    grid = [[0, 0, 0, 0, 3, 0, 8, 1, 0],
+            [0, 0, 0, 8, 0, 0, 0, 0, 0],
+            [0, 7, 0, 0, 0, 0, 0, 0, 4],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 4, 0, 9, 0, 0, 0, 0],
+            [0, 9, 0, 0, 4, 0, 0, 2, 6],
+            [4, 2, 0, 0, 0, 6, 0, 0, 0],
+            [9, 0, 0, 3, 0, 0, 0, 7, 0],
+            [0, 0, 3, 1, 0, 9, 2, 0, 0]]
+    '''
 
     unsolvedGrid = copy.deepcopy(grid)
 
