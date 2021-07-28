@@ -124,6 +124,7 @@ def delete_incorrect(solvedGrid, grid, boxList, window, font, gridlineColour):
             if solvedGrid[i][j] != grid[i][j]:
                 grid[i][j] = 0
     print_initial_grid(boxList, grid, window, font, gridlineColour)
+    draw_grid_lines(window)
     pygame.display.flip()
 
 
@@ -290,7 +291,7 @@ def game(grid, unsolvedGrid, solvedGrid):
                         if check:
                             check = False
                         else:
-                            delete_incorrect(solvedGrid, grid, boxList, window, font, selectedColour)
+                            delete_incorrect(solvedGrid, grid, boxList, window, font, gridlineColour)
                             check = True
 
                 # on right click
